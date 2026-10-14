@@ -1,0 +1,47 @@
+name = "dico"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+
+[[kv_namespaces]]
+binding = "DICO_KV"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+# Rute: dico răspunde pe toate site-urile rețelei (zonele trebuie să fie în același cont Cloudflare)
+routes = [
+  { pattern = "aiventure.ro/dico*", zone_name = "aiventure.ro" },
+  { pattern = "aiventure.ro/adn.json", zone_name = "aiventure.ro" },
+  { pattern = "5thelement.ai/dico*", zone_name = "5thelement.ai" },
+  { pattern = "5thelement.ai/adn.json", zone_name = "5thelement.ai" },
+  { pattern = "3webobs.com/dico*", zone_name = "3webobs.com" },
+  { pattern = "3webobs.com/adn.json", zone_name = "3webobs.com" },
+  { pattern = "ai-lens.eu/dico*", zone_name = "ai-lens.eu" },
+  { pattern = "ai-lens.eu/adn.json", zone_name = "ai-lens.eu" },
+  { pattern = "eu-ai-act-ready.eu/dico*", zone_name = "eu-ai-act-ready.eu" },
+  { pattern = "eu-ai-act-ready.eu/adn.json", zone_name = "eu-ai-act-ready.eu" },
+  { pattern = "1clic-ia.eu/dico*", zone_name = "1clic-ia.eu" },
+  { pattern = "1clic-ia.eu/adn.json", zone_name = "1clic-ia.eu" },
+  { pattern = "1clic-ia.fr/dico*", zone_name = "1clic-ia.fr" },
+  { pattern = "1clic-ia.fr/adn.json", zone_name = "1clic-ia.fr" },
+  { pattern = "aireadyinjector.com/dico*", zone_name = "aireadyinjector.com" },
+  { pattern = "aireadyinjector.com/adn.json", zone_name = "aireadyinjector.com" },
+  { pattern = "aiventure.uk/dico*", zone_name = "aiventure.uk" },
+  { pattern = "aiventure.uk/adn.json", zone_name = "aiventure.uk" },
+  { pattern = "b2b-ai-library.org/dico*", zone_name = "b2b-ai-library.org" },
+  { pattern = "b2b-ai-library.org/adn.json", zone_name = "b2b-ai-library.org" },
+  { pattern = "eu-112.eu/dico*", zone_name = "eu-112.eu" },
+  { pattern = "eu-112.eu/adn.json", zone_name = "eu-112.eu" },
+  { pattern = "eu-112.ro/dico*", zone_name = "eu-112.ro" },
+  { pattern = "eu-112.ro/adn.json", zone_name = "eu-112.ro" },
+  { pattern = "eu-ai-act.ro/dico*", zone_name = "eu-ai-act.ro" },
+  { pattern = "eu-ai-act.ro/adn.json", zone_name = "eu-ai-act.ro" },
+  { pattern = "eu-ai-audit.eu/dico*", zone_name = "eu-ai-audit.eu" },
+  { pattern = "eu-ai-audit.eu/adn.json", zone_name = "eu-ai-audit.eu" },
+  { pattern = "eu-ai-ready.eu/dico*", zone_name = "eu-ai-ready.eu" },
+  { pattern = "eu-ai-ready.eu/adn.json", zone_name = "eu-ai-ready.eu" },
+  { pattern = "floride-e2.com/dico*", zone_name = "floride-e2.com" },
+  { pattern = "floride-e2.com/adn.json", zone_name = "floride-e2.com" },
+  { pattern = "the3webs.com/dico*", zone_name = "the3webs.com" },
+  { pattern = "the3webs.com/adn.json", zone_name = "the3webs.com" },
+  { pattern = "firmsfinder.eu/dico*", zone_name = "firmsfinder.eu" },
+  { pattern = "firmsfinder.eu/adn.json", zone_name = "firmsfinder.eu" },
+]
