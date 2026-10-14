@@ -2,9 +2,7 @@ name = "dico"
 main = "worker.js"
 compatibility_date = "2026-10-01"
 
-[[kv_namespaces]]
-binding = "DICO_KV"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+# Fără KV: datele vin din kv-seed.json din repo (GitHub raw). Pentru KV, adăugați binding DICO_KV.
 
 # Rute: dico răspunde pe toate site-urile rețelei (zonele trebuie să fie în același cont Cloudflare)
 routes = [

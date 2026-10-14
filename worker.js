@@ -1,18 +1,31 @@
 // dico — dicționar la nivel de rețea AiVenture S.R.L. (SSOT în KV, sesiune în meta.session)
 // v0.2: adaugă /adn.json generat din dico (înlocuiește adn.json static al fiecărui site)
 // Rute: <domeniu>/dico.json  |  <domeniu>/dico/network.json  |  <domeniu>/dico/entity/<id>
-// Citire doar. Actualizarea se face manual în KV (nicio cheie/token în cod).
+// Citire doar. SSOT = kv-seed.json din repo-ul GitHub aipath512/dico (citit prin raw.githubusercontent, cache 300s).
+// Dacă există binding KV (DICO_KV), are prioritate; altfel se folosește repo-ul. Nicio cheie/token în cod.
 const H = { "content-type": "application/json; charset=utf-8", "access-control-allow-origin": "*", "cache-control": "public, max-age=300" };
 const out = (o, s = 200) => new Response(JSON.stringify(o, null, 1), { status: s, headers: H });
+const RAW = "https://raw.githubusercontent.com/aipath512/dico/main/kv-seed.json";
+let SEED = null, SEED_AT = 0;
+async function seed(env) {
+  if (env.DICO_KV) return { get: async (k) => env.DICO_KV.get(k) };
+  if (!SEED || Date.now() - SEED_AT > 300000) {
+    const r = await fetch(RAW, { cf: { cacheTtl: 300, cacheEverything: true } });
+    if (!r.ok) { if (SEED) return SEED; throw new Error("seed indisponibil: HTTP " + r.status); }
+    const m = Object.fromEntries((await r.json()).map(x => [x.key, x.value]));
+    SEED = { get: async (k) => m[k] }; SEED_AT = Date.now();
+  }
+  return SEED;
+}
 const j = async (kv, k) => JSON.parse((await kv.get(k)) || "null");
 
 export default {
   async fetch(req, env) {
     const u = new URL(req.url);
     const host = u.hostname.replace(/^www\./, "");
-    const kv = env.DICO_KV;
+    let kv; try { kv = await seed(env); } catch (e) { return out({ error: String(e.message) }, 503); }
     const [meta, sites] = await Promise.all([j(kv, "meta"), j(kv, "sites")]);
-    if (!meta || !sites) return out({ error: "KV gol: încărcați kv-seed" }, 503);
+    if (!meta || !sites) return out({ error: "seed gol" }, 503);
     // site-ul cerut: din host; pe domeniul Worker-ului (workers.dev / dico.*) din ?site=
     const site = sites[host] ? host : (u.searchParams.get("site") || "").replace(/^www\./, "");
     const p = u.pathname.replace(/\/+$/, "");
